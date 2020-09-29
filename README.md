@@ -1,3 +1,3 @@
 # Photo-sorter
 
-Set of scripts to organize my photo pile of sha,e
+Set of scripts to organize my photo pile of shame
