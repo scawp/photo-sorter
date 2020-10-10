@@ -5,9 +5,8 @@
 
 dir="/mnt/c/Users/rob/Documents/"
 
-ext_array=("jpg" "jpeg" "png")
+ext_array=("jpg" "jpeg" "png" "bmp" "raw" "gif")
 #ext_array+=("pdf")
-
 
 echo "searching for ${ext_array[@]} files"
 

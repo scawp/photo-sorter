@@ -34,7 +34,7 @@ do
 
   full_filepath=$destintion_dir$filename$'\t'$ext
 
-  #tab delimited line of original file, new path, new name, original timestamp
+  #tab delimited line of original file, new path, new name, ext, timestamp
   echo "$line"$'\t'"$full_filepath"$'\t'"$(date -d "$timestamp" +"%s")" >> "../tmp/generated-filepathnames.txt"
 
   #TODO check file was written to?
