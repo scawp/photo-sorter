@@ -22,7 +22,7 @@ echo "$count_found_files files found and written to ../tmp/found-files.txt"
 
 #exit with success if files found, else error
 if (( count_found_files > 0 )); then
-  exit 0
+  exit 0;
 else
-  exit 1
+  exit 1;
 fi
