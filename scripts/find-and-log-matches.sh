@@ -3,7 +3,14 @@
 #TODO
 #get args instead of hardcode
 
-dir="/mnt/c/Users/rob/Documents/"
+#dir="/mnt/d/BACKUP/2GB SD/"
+dir=$1
+
+#check "source_dir" has been entered (ths only check for NULL)
+if [ -z "$dir" ]; then
+    echo "No Destination Dir, qutting."
+    exit 1;
+fi
 
 ext_array=("jpg" "jpeg" "png" "bmp" "raw" "gif")
 #ext_array+=("pdf")

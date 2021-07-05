@@ -2,8 +2,8 @@
 
 found_files=$1
 
-#TODO: as input arg, maybe also temp 'generated-filepathnames.txt'
-destintion_dir="/mnt/c/testphotos/"
+#destintion_dir="/mnt/d/stagingPhotos/"
+destintion_dir=$2
 
 #check "found_files" file exists and isn't empty
 if [ ! -f "$found_files" ]; then
@@ -14,7 +14,16 @@ elif [ ! -s "$found_files" ]; then
     exit 1;
 fi
 
+#check "destintion_dir" has been entered (ths only check for NULL),
+if [ -z "$destintion_dir" ]; then
+    echo "No Destination Dir, qutting."
+    exit 1;
+fi
+
 #TODO: check if list is correct format
+
+echo "Processing." #add stats
+
 
 #purge previous temp file
 true > "../tmp/generated-filepathnames.txt"
@@ -30,7 +39,7 @@ do
 
   #added tab between dir and filename and extention for easier processing
   #TODO: split up to improve readability
-  filename=$(date -d "$timestamp" +"%Y/%b/"$'\t'"%Y-%m-%d-%H%M")
+  filename=$(date -d "$timestamp" +"%Y/%m-%b/"$'\t'"%Y-%m-%d-%H%M")
 
   full_filepath=$destintion_dir$filename$'\t'$ext
 
@@ -40,10 +49,13 @@ do
   #TODO check file was written to?
 
   #log to screen
-  echo ""$line" will become: "$full_filepath""
+  #echo ""$line" will become: "$full_filepath""
 done < "$found_files"
 
+echo "Done." #add stats
+
+#below unnessersery now
 #sort generated file in order for further processing
-sort -t $'\t' -k5 -o"../tmp/generated-filepathnames.txt" "../tmp/generated-filepathnames.txt"
+#sort -t $'\t' -k5 -o"../tmp/generated-filepathnames.txt" "../tmp/generated-filepathnames.txt"
 
 exit 0;
