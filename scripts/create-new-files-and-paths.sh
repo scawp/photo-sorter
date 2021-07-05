@@ -12,6 +12,9 @@ elif [ ! -s "$generated_list" ]; then
     exit 1;
 fi
 
+#moving i here as a workaround for #issue5
+i=0
+
 #copy original to new path, on duplicate add numbered backup
 while read -r line; do
   #0 original path, 1 destination dir, 2 new filename, 4 extention, 5 timestamp
@@ -20,7 +23,7 @@ while read -r line; do
   mkdir -p "${column[1]}"
 
   source_filename="${column[0]}"
-  i=0
+  #i=0
   conflict_suffix=""
   completed=false
 
@@ -45,7 +48,8 @@ while read -r line; do
     #no existing file, do copy or move
     echo "Creating $destination_filename"
 
-    cp --backup=numbered "$source_filename" "$destination_filename" 
+    #cp --backup=numbered "$source_filename" "$destination_filename"
+    mv --backup=numbered "$source_filename" "$destination_filename" 
 
     completed=true
     fi
