@@ -31,20 +31,22 @@ true > "../tmp/generated-filepathnames.txt"
 #read each line of "found_files" and generate new filename from file timestamp
 while read -r line
 do
-  timestamp=$(stat -c '%y' "$line")
+  #get the timestamp of the file
+  timestamp=$(stat -c '%y' "$line") #%y = mtime human-readable? probably could change to %Y
 
-  #this regex is overkill (and wrong), just need anything after last "."
+  #create new path from timestamp
+  new_date_path=$(date -d "$timestamp" +"%Y/%m-%b/")
+
+  #get filename
+  [[ "$line" =~ ^(.+\/)([^\/]+)\. ]]
+  filename="${BASH_REMATCH[2]}"
+
+  #get ext, this regex is overkill (and wrong), just need anything after last "."
   [[ $line =~ .([Jj][Pp]([Ee]|)[Gg]|png)$ ]]
   ext="${BASH_REMATCH[0]}"
 
-  #added tab between dir and filename and extention for easier processing
-  #TODO: split up to improve readability
-  filename=$(date -d "$timestamp" +"%Y/%m-%b/"$'\t'"%Y-%m-%d-%H%M")
-
-  full_filepath=$destintion_dir$filename$'\t'$ext
-
-  #tab delimited line of original file, new path, new name, ext, timestamp
-  echo "$line"$'\t'"$full_filepath"$'\t'"$(date -d "$timestamp" +"%s")" >> "../tmp/generated-filepathnames.txt"
+  #tab delimited line of: original filepath, new path, filename, ext
+  echo "$line"$'\t'"$destintion_dir""$new_date_path"$'\t'"$filename"$'\t'"$ext" >> "../tmp/generated-filepathnames.txt"
 
   #TODO check file was written to?
 
@@ -53,9 +55,5 @@ do
 done < "$found_files"
 
 echo "Done." #add stats
-
-#below unnessersery now
-#sort generated file in order for further processing
-#sort -t $'\t' -k5 -o"../tmp/generated-filepathnames.txt" "../tmp/generated-filepathnames.txt"
 
 exit 0;

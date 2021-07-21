@@ -35,7 +35,6 @@ while read -r line; do
     if [ -f "$destination_filename" ]; then
       echo "Comparing existing file: $destination_filename"
       if $(cmp -s "$source_filename" "$destination_filename"); then
-        #skip file or delete original
         echo "Skipping duplicate file."
         completed=true
       else
@@ -45,13 +44,13 @@ while read -r line; do
         conflict_suffix="-$i"
       fi
     else
-    #no existing file, do copy or move
-    echo "Creating $destination_filename"
+      #no existing file, do copy or move
+      echo "Creating $destination_filename"
 
-    #cp --backup=numbered "$source_filename" "$destination_filename"
-    mv --backup=numbered "$source_filename" "$destination_filename" 
+      cp -p --backup=numbered "$source_filename" "$destination_filename"
+      #mv -p --backup=numbered "$source_filename" "$destination_filename" 
 
-    completed=true
+      completed=true
     fi
     echo ""
   done
