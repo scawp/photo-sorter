@@ -5,6 +5,8 @@ found_files=$1
 #destintion_dir="/mnt/d/stagingPhotos/"
 destintion_dir=$2
 
+run_id=$3
+
 #check "found_files" file exists and isn't empty
 if [ ! -f "$found_files" ]; then
     echo "Found file list \"$1\" doesnt exists, qutting."
@@ -20,13 +22,18 @@ if [ -z "$destintion_dir" ]; then
     exit 1;
 fi
 
+#check "run_id" has been entered
+if [ -z "$run_id" ]; then
+  run_id=$(date +"%s%3N")
+fi
+
 #TODO: check if list is correct format
 
 echo "Processing." #add stats
 
 
 #purge previous temp file
-true > "../tmp/generated-filepathnames.txt"
+true > "../tmp/2-generate-new-filepathnames-$run_id.log"
 
 #read each line of "found_files" and generate new filename from file timestamp
 while read -r line
@@ -53,7 +60,7 @@ do
   ext="${BASH_REMATCH[0]}"
 
   #tab delimited line of: original filepath, new path, filename, ext
-  echo "$line"$'\t'"$destintion_dir""$new_date_path"$'\t'"$filename"$'\t'"$ext" >> "../tmp/generated-filepathnames.txt"
+  echo "$line"$'\t'"$destintion_dir""$new_date_path"$'\t'"$filename"$'\t'"$ext" >> "../tmp/2-generate-new-filepathnames-$run_id.log"
 
 done < "$found_files"
 
