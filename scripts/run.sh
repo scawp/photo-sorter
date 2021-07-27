@@ -5,14 +5,13 @@
 
 #echo "$source"
 
+run_id=$(date +"%s%3N")
+
 
 #should add these to arg list for run.sh
-#/mnt/c/Users/rob/Documents/Randon SD 2020-07
-#source_dir="/mnt/c/Users/rob/Documents/Randon SD 2020-07"
 source_dir="/mnt/c/Users/rob/Pictures/crap from z3/WhatsApp Images"
 destintion_dir="/mnt/p/photos/"
 
-./find-and-log-matches.sh "$source_dir"
-./generate-new-filepathnames-from-name.sh "../tmp/found-files.txt" "$destintion_dir"
-
-#./create-new-files-and-paths.sh "../tmp/generated-filepathnames.txt"
+./1-find-and-log-matches.sh "$source_dir" "$run_id"
+./2a-generate-new-filepathnames-from-name.sh "../tmp/1-find-and-log-matches-$run_id.log" "$destintion_dir" "$run_id"
+#./3-create-new-files-and-paths.sh "../tmp/2-generate-new-filepathnames-$run_id.log"
