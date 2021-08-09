@@ -29,11 +29,14 @@ fi
 
 #TODO: check if list is correct format
 
+tmp_dir="$(dirname $(dirname $(realpath "$0")))/tmp/"
+
+
 echo "Processing." #add stats
 
 
 #purge previous temp file
-true > "../tmp/2-generate-new-filepathnames-$run_id.log"
+true > "$tmp_dir/2-generate-new-filepathnames-$run_id.log"
 
 #read each line of "found_files" and generate new filename from file timestamp
 while read -r line
@@ -53,7 +56,7 @@ do
   ext="${BASH_REMATCH[0]}"
 
   #tab delimited line of: original filepath, new path, filename, ext
-  echo "$line"$'\t'"$destintion_dir""$new_date_path"$'\t'"$filename"$'\t'"$ext" >> "../tmp/2-generate-new-filepathnames-$run_id.log"
+  echo "$line"$'\t'"$destintion_dir""$new_date_path"$'\t'"$filename"$'\t'"$ext" >> "$tmp_dir/2-generate-new-filepathnames-$run_id.log"
 
   #TODO check file was written to?
 
