@@ -1,15 +1,14 @@
 #!/bin/bash
 
-#get args
 generated_list=$1
 
-#check "found_files" file exists and isn't empty
+#check input file exists and isn't empty
 if [ ! -f "$generated_list" ]; then
-    echo "Generated list \"$1\" doesnt exists, qutting."
-    exit 1;
+  echo "Generated list \"$1\" doesnt exists, qutting."
+  exit 1;
 elif [ ! -s "$generated_list" ]; then
-    echo "Generated list \"$1\" is empty, qutting."
-    exit 1;
+  echo "Generated list \"$1\" is empty, qutting."
+  exit 1;
 fi
 
 #moving i here as a workaround for #issue5
@@ -39,21 +38,22 @@ while read -r line; do
         completed=true
       else
         echo "File exists, renaming."
+
         #add version *-n.jpg
         ((i++))
         conflict_suffix="-$i"
       fi
     else
       #no existing file, do copy or move
+      
       echo "Creating $destination_filename"
 
       cp -p --backup=numbered "$source_filename" "$destination_filename"
-      #mv -p --backup=numbered "$source_filename" "$destination_filename" 
 
       completed=true
     fi
-    echo ""
   done
 done < "$generated_list"
 
+echo "Completed."
 exit 0;

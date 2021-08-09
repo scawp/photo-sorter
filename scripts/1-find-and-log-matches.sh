@@ -1,26 +1,24 @@
 #!/bin/bash
 
-#TODO
-#get args instead of hardcode
-
-#dir="/mnt/d/BACKUP/2GB SD/"
 dir=$1
-
 run_id=$2
 
-#check "source_dir" has been entered (ths only check for NULL)
+#check "source_dir" has been entered or die
 if [ -z "$dir" ]; then
-  echo "No Destination Dir, qutting."
+  echo "Source Directory is Null, qutting."
+  exit 1;
+elif [ ! -d "$dir" ]; then
+  echo "Source Directory doesn't exist, qutting."
   exit 1;
 fi
 
-#check "run_id" has been entered
+#check "run_id" has been entered or create one
 if [ -z "$run_id" ]; then
   run_id=$(date +"%s%3N")
 fi
 
+#array of files to seach for. take as arg or create config?
 ext_array=("jpg" "jpeg" "png" "bmp" "raw" "gif")
-#ext_array+=("pdf")
 
 echo "searching for ${ext_array[@]} files"
 
@@ -28,8 +26,7 @@ echo "searching for ${ext_array[@]} files"
 IFS='|';ext_regex="${ext_array[*]}"; unset IFS;
 
 #option -iregex for case insensative
-#matches will be written to temp file
-count_found_files=$(find "$dir" -regextype posix-egrep -regex '.*\.('"$ext_regex"')$' | tee "../tmp/1-find-and-log-matches-$run_id.log" | wc -l)
+count_found_files=$(find "$dir" -regextype posix-egrep -iregex '.*\.('"$ext_regex"')$' | tee "../tmp/1-find-and-log-matches-$run_id.log" | wc -l)
 
 echo "$count_found_files files found and written to ../tmp/1-find-and-log-matches-$run_id.log"
 

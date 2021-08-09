@@ -1,10 +1,7 @@
 #!/bin/bash
 
 found_files=$1
-
-#destintion_dir="/mnt/d/stagingPhotos/"
 destintion_dir=$2
-
 run_id=$3
 
 #check "found_files" file exists and isn't empty
@@ -22,7 +19,7 @@ if [ -z "$destintion_dir" ]; then
     exit 1;
 fi
 
-#check "run_id" has been entered
+#check "run_id" has been entered or create one
 if [ -z "$run_id" ]; then
   run_id=$(date +"%s%3N")
 fi
@@ -39,7 +36,7 @@ true > "../tmp/2-generate-new-filepathnames-$run_id.log"
 while read -r line
 do
   #look for ISO8601 date in name
-  #TODO if no match dump into another file for later processing
+  #TODO if no match dump into another logfile for later processing
   [[ "$line" =~ (20[0-2][0-9][0-1][0-9][0-3][0-9]) ]]
   date_in_filename="${BASH_REMATCH[0]}"
 
