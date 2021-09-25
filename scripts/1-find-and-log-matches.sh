@@ -1,25 +1,27 @@
 #!/bin/bash
 
-#get args
 source_dir=$1
 run_id=$2
 
-#check "source_dir" has been entered (ths only check for NULL)
+#check "source_dir" has been entered or die
 if [ -z "$source_dir" ]; then
-  echo "No Destination Dir, qutting."
+  echo "Source Directory is Null, qutting."
+  exit 1;
+elif [ ! -d "$source_dir" ]; then
+  echo "Source Directory doesn't exist, qutting."
   exit 1;
 fi
 
-#check "run_id" has been entered
+#check "run_id" has been entered or create one
 if [ -z "$run_id" ]; then
   run_id=$(date +"%s%3N")
 fi
 
+#array of files to seach for. take as arg or create config?
 #set up vars
 tmp_dir="$(dirname $(dirname $(realpath "$0")))/tmp/"
 
 ext_array=("jpg" "jpeg" "png" "bmp" "raw" "gif")
-#ext_array+=("pdf")
 
 echo "searching for ${ext_array[@]} files" 
 
