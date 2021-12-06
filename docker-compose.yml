@@ -1,0 +1,7 @@
+version: '3.9'
+services:
+  photo-sorter:
+    build: .
+    volumes:
+#      - /PATH/TO/UNSORTED/PICTURES:/mnt/source
+#      - /PATH/TO/SORTED/PICTURES:/mnt/destination
