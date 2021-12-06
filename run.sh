@@ -11,10 +11,10 @@ tmp_dir="$(dirname $(realpath "$0"))/tmp"
 
 run_id=$(date +"%s%3N")
 
-#should add these to arg list for run.sh
-source_dir="/mnt/c/Users/rob/Pictures/crap from z3/WhatsApp Images"
-destintion_dir="/mnt/p/photos/"
-
+#should add these to arg list when run direct
+#when running docker these should be configured in the volumes
+source_dir="/mnt/source/"
+destintion_dir="/mnt/destination/"
 #run the scripts
 "$scripts_dir/1-find-and-log-matches.sh" "$source_dir" "$run_id"
 "$scripts_dir/2a-generate-new-filepathnames-from-name.sh" "$tmp_dir/1-find-and-log-matches-$run_id.log" "$destintion_dir" "$run_id"
